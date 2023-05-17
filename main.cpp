@@ -41,16 +41,18 @@ int main()
     while (num != 6){
         switch (num){
         case 0:
+            cout << "Работаем с многочленом f(x)=12" << endl;
             w = (n-1)*polinom0degree();
             q = n*polinom0degree();
             J = integralOfPolinom0degree(b) - integralOfPolinom0degree(a);
-            leftJ = leftRectangles(0, w, step);
-            rightJ = rightRectangles(0, w, step, n);
+            leftJ = leftRectangles(0, w, step, a);
+            rightJ = rightRectangles(0, w, step, n, a);
             middleJ = middleRectangles(0, q, step);
-            trapJ = trapeze(0, w, step, n);
-            simpsJ = simpson(0, w, q, step, n);
+            trapJ = trapeze(0, w, step, n, a);
+            simpsJ = simpson(0, w, q, step, n, a);
             break;
         case 1:
+            cout << "Работаем с многочленом f(x)=x-4" << endl;
             w = 0; q = 0;
             for (size_t i = 1; i < n; i++)
             {
@@ -59,28 +61,30 @@ int main()
             }
             q += polinom1degree((2*a+step)/2);
             J = integralOfPolinom1degree(b) - integralOfPolinom1degree(a);
-            leftJ = leftRectangles(1, w, step);
-            rightJ = rightRectangles(1, w, step, n);
+            leftJ = leftRectangles(1, w, step, a);
+            rightJ = rightRectangles(1, w, step, n, a);
             middleJ = middleRectangles(1, q, step);
-            trapJ = trapeze(1, w, step, n);
-            simpsJ = simpson(1, w, q, step, n);
+            trapJ = trapeze(1, w, step, n, a);
+            simpsJ = simpson(1, w, q, step, n, a);
             break;
         case 2:
+            cout << "Работаем с многочленом f(x)=3x^2+4x-3" << endl;
             w = 0; q = 0;
             for (size_t i = 1; i < n; i++)
             {
                 w += polinom2degree(a+i*step);
-                q += polinom2degree((2*a+2*i*step+step)/2);
+                q += polinom2degree(a+i*step+step/2);
             }
-            q += polinom2degree((2*a+step)/2);
+            q += polinom2degree(a+step/2);
             J = integralOfPolinom2degree(b) - integralOfPolinom2degree(a);
-            leftJ = leftRectangles(2, w, step);
-            rightJ = rightRectangles(2, w, step, n);
+            leftJ = leftRectangles(2, w, step, a);
+            rightJ = rightRectangles(2, w, step, n, a);
             middleJ = middleRectangles(2, q, step);
-            trapJ = trapeze(2, w, step, n);
-            simpsJ = simpson(2, w, q, step, n);
+            trapJ = trapeze(2, w, step, n, a);
+            simpsJ = simpson(2, w, q, step, n, a);
             break;
         case 3:
+            cout << "Работаем с многочленом f(x)=4x^3-6x^2+7x-10" << endl;
             w = 0; q = 0;
             for (size_t i = 1; i < n; i++)
             {
@@ -89,13 +93,14 @@ int main()
             }
             q += polinom3degree((2*a+step)/2);
             J = integralOfPolinom3degree(b) - integralOfPolinom3degree(a);
-            leftJ = leftRectangles(3, w, step);
-            rightJ = rightRectangles(3, w, step, n);
+            leftJ = leftRectangles(3, w, step, a);
+            rightJ = rightRectangles(3, w, step, n, a);
             middleJ = middleRectangles(3, q, step);
-            trapJ = trapeze(3, w, step, n);
-            simpsJ = simpson(3, w, q, step, n);
+            trapJ = trapeze(3, w, step, n, a);
+            simpsJ = simpson(3, w, q, step, n, a);
             break;
         case 4:
+            cout << "Работаем с функцией f(x)=6x^2+cos(x)*exp(4x)" << endl;
             w = 0; q = 0;
             for (size_t i = 1; i < n; i++)
             {
@@ -104,13 +109,14 @@ int main()
             }
             q += func((2*a+step)/2);
             J = integralOfFunc(b) - integralOfFunc(a);
-            leftJ = leftRectangles(4, w, step);
-            rightJ = rightRectangles(4, w, step, n);
+            leftJ = leftRectangles(4, w, step, a);
+            rightJ = rightRectangles(4, w, step, n, a);
             middleJ = middleRectangles(4, q, step);
-            trapJ = trapeze(4, w, step, n);
-            simpsJ = simpson(4, w, q, step, n);
+            trapJ = trapeze(4, w, step, n, a);
+            simpsJ = simpson(4, w, q, step, n, a);
             break;
         case 5:
+            cout << "Работаем с функцией f(x)=1.27*x^5+2.04x" << endl;
             w = 0; q = 0;
             for (size_t i = 1; i < n; i++)
             {
@@ -119,37 +125,37 @@ int main()
             }
             q += f((2*a+step)/2);
             J = F(b) - F(a);
-            leftJ = leftRectangles(5, w, step);
-            rightJ = rightRectangles(5, w, step, n);
+            leftJ = leftRectangles(5, w, step, a);
+            rightJ = rightRectangles(5, w, step, n, a);
             middleJ = middleRectangles(5, q, step);
-            trapJ = trapeze(5, w, step, n);
-            simpsJ = simpson(5, w, q, step, n);
+            trapJ = trapeze(5, w, step, n, a);
+            simpsJ = simpson(5, w, q, step, n, a);
             break;
         case 6:
             return 0;
         }
         cout << "Точное значение интеграла: J = " << J << endl;
-        cout << "КФ левых прямоугольников: J(h) = " << leftJ << endl
+        cout << "КФ левых прямоугольников (АСТ=0): J(h) = " << leftJ << endl
              << "Теоретическая погрешность: " << 0.5*(b-a)*fabs(b)*step << endl
              << "Абсолютная фактическая погрешность: |J - J(h)| = " << fabs(J-leftJ) << endl
              << "Относительная фактическая погрешность: " << fabs(J-leftJ)/fabs(J) << endl
              << "------------------------------------------" << endl
-             << "КФ правых прямоугольников: J(h) = " << rightJ << endl
+             << "КФ правых прямоугольников (АСТ=0): J(h) = " << rightJ << endl
              << "Теоретическая погрешность: " << 0.5*(b-a)*fabs(b)*step << endl
              << "Абсолютная фактическая погрешность: |J - J(h)| = " << fabs(J-rightJ) << endl
              << "Относительная фактическая погрешность: " <<  fabs(J-rightJ)/fabs(J) << endl
              << "------------------------------------------" << endl
-             << "КФ средних прямоугольников: J(h) = " << middleJ << endl
+             << "КФ средних прямоугольников (АСТ=1): J(h) = " << middleJ << endl
              << "Теоретическая погрешность: " << (b-a)*fabs(b)*pow(step,2)/24 << endl
              << "Абсолютная фактическая погрешность: |J - J(h)| = " << fabs(J-middleJ) << endl
              << "Относительная фактическая погрешность: " << fabs(J-middleJ)/fabs(J) << endl
              << "------------------------------------------" << endl
-             << "КФ трапеций: J(h) = " << trapJ << endl
+             << "КФ трапеций (АСТ=1): J(h) = " << trapJ << endl
              << "Теоретическая погрешность: " << (b-a)*fabs(b)*pow(step,2)/12 << endl
              << "Абсолютная фактическая погрешность: |J - J(h)| = " << fabs(J-trapJ) << endl
              << "Относительная фактическая погрешность: " << fabs(J-trapJ)/fabs(J) << endl
              << "------------------------------------------" << endl
-             << "КФ Симпсона: J(h) = " << simpsJ << endl
+             << "КФ Симпсона (АСТ=3): J(h) = " << simpsJ << endl
              << "Теоретическая погрешность: " << (b-a)*fabs(b)*pow(step,4)/2880 << endl
              << "Абсолютная фактическая погрешность: |J - J(h)| = " << fabs(J-simpsJ) << endl
              << "Относительная фактическая погрешность: " << fabs(J-simpsJ)/fabs(J) << endl

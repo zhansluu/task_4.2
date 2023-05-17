@@ -12,11 +12,6 @@ double F (double x)
     return (1.27*pow(x,6)+6.12*x*x)/6;
 }
 
-double rho ()
-{
-    return 1;
-}
-
 double polinom0degree ()
 {
     return 12;
